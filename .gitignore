@@ -110,3 +110,8 @@ venv.bak/
 
 # PyCharm
 .idea/
+
+demo/output/
+data/
+results/
+pretrained_results/

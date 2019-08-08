@@ -30,7 +30,7 @@ if __name__ == "__main__":
     )
     
     keypoint_separation_bandwidth=0.08
-    keypoint_separation_loss_weight = 20.0
+    keypoint_separation_loss_weight = 5.0
 
     opt = {
         "optimizer": "Adam",

@@ -18,7 +18,8 @@ for k=1:size(im, 1)
     set(gcf,'color','white');
     if output_to_dir
         fprintf('%d / %d\n', k, size(im, 1))
-        saveas(the_figure, fullfile(output_dir, sprintf('%d.eps', k)), 'epsc')
+        %saveas(the_figure, fullfile(output_dir, sprintf('%d.eps', k)), 'epsc')
+        saveas(the_figure, fullfile(output_dir, sprintf('%d.jpg', k)))
     else
         while waitforbuttonpress; end
     end

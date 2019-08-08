@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sbatch --job-name=lmdis_vis \
+sbatch --job-name=lmdis_vis_zebra \
        --output=results/vis_zebra_10/out.txt \
        --error=results/vis_zebra_10/err.txt \
        --nodes=1 \

@@ -36,18 +36,29 @@ class Net:
     spec.loader.exec_module(module)
     self.api = module.VisApi(dataset_dir, 'train')  # valid split does not have annotation
 
+    # # make dataset
+    # cat_nms = 'zebra'
+    # cat_ids = self.api.get_cat_ids(cat_nms=cat_nms)
+    # ann_ids = self.api.get_ann_ids(cat_ids=cat_ids)
+    # anns = self.api.load_anns(ann_ids)
+    # self.dataset = []
+    # for ann in anns:
+    #   video_id = ann['video_id']
+    #   vid = self.api.load_vids(video_id)[0]
+    #   for bbox, file_name in zip(ann['bboxes'], vid['file_names']):
+    #     if bbox is not None:
+    #       self.dataset.append({'bbox': np.array(bbox, dtype=int), 'file_name': file_name})
+
     # make dataset
     cat_nms = 'zebra'
     cat_ids = self.api.get_cat_ids(cat_nms=cat_nms)
-    ann_ids = self.api.get_ann_ids(cat_ids=cat_ids)
-    anns = self.api.load_anns(ann_ids)
+    fanns = self.api.get_fanns(cat_ids=cat_ids, crowd=False, area=[2500, float('inf')], hw_ratio=[0.5, 2],
+                               in_frame=True)
     self.dataset = []
-    for ann in anns:
-      video_id = ann['video_id']
+    for fann in fanns:
+      video_id = fann['video_id']
       vid = self.api.load_vids(video_id)[0]
-      for bbox, file_name in zip(ann['bboxes'], vid['file_names']):
-        if bbox is not None:
-          self.dataset.append({'bbox': np.array(bbox, dtype=int), 'file_name': file_name})
+      self.dataset.append({'bbox': np.array(fann['bbox'], dtype=int), 'file_name': vid['file_names'][fann['frame_id']]})
 
     self._num_samples = len(self.dataset)
     self._waitlist = list(range(len(self.dataset)))
